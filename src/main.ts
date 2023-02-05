@@ -1,13 +1,13 @@
 import './polyfills'
-import {createApp} from 'vue'
+import { createApp } from 'vue'
 
 import pinia from './pinia'
 import router from './router'
 import App from './App.vue'
 
-import {error, success} from './message'
+import { error, success } from './message'
 
-import {VERSION} from './version.json'
+import { VERSION } from './version.json'
 
 // Notifications
 import Notifications from '@kyvg/vue3-notification'
@@ -16,7 +16,7 @@ import Notifications from '@kyvg/vue3-notification'
 import './registerServiceWorker'
 
 // i18n
-import {i18n, setLanguage} from './i18n'
+import { i18n, setLanguage } from './i18n'
 
 declare global {
 	interface Window {
@@ -30,8 +30,12 @@ console.info(`Vikunja frontend version ${VERSION}`)
 
 // Check if we have an api url in local storage and use it if that's the case
 const apiUrlFromStorage = localStorage.getItem('API_URL')
+const apiUrlFromEnv = process.env.VIKUNJA_API_URL
+console.log({ apiUrlFromEnv, apiUrlFromStorage })
 if (apiUrlFromStorage !== null) {
 	window.API_URL = apiUrlFromStorage
+} else if (apiUrlFromEnv) {
+	window.API_URL = apiUrlFromEnv
 }
 
 // Make sure the api url does not contain a / at the end
@@ -76,7 +80,7 @@ app.config.errorHandler = (err, vm, info) => {
 if (import.meta.env.DEV) {
 	app.config.warnHandler = (msg) => {
 		error(msg)
-		throw(msg)
+		throw (msg)
 	}
 
 	// https://stackoverflow.com/a/52076738/15522256
