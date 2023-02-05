@@ -10,7 +10,7 @@ const Logo = computed(() => now.value.getMonth() === 5 ? LogoFullPride : LogoFul
 </script>
 
 <template>
-	<Logo alt="Vikunja" class="logo" />
+	<Logo alt="PorePriority" class="logo" />
 </template>
 
 <style lang="scss" scoped>
