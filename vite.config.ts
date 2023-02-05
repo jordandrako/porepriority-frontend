@@ -1,14 +1,14 @@
 /// <reference types="vitest" />
-import {defineConfig, type PluginOption, loadEnv} from 'vite'
+import { defineConfig, type PluginOption, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import legacyFn from '@vitejs/plugin-legacy'
-import {URL, fileURLToPath} from 'node:url'
-import {dirname, resolve} from 'node:path'
+import { URL, fileURLToPath } from 'node:url'
+import { dirname, resolve } from 'node:path'
 
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite'
-import {VitePWA} from 'vite-plugin-pwa'
+import { VitePWA } from 'vite-plugin-pwa'
 import VitePluginInjectPreload from 'vite-plugin-inject-preload'
-import {visualizer} from 'rollup-plugin-visualizer'
+import { visualizer } from 'rollup-plugin-visualizer'
 import svgLoader from 'vite-svg-loader'
 import postcssPresetEnv from 'postcss-preset-env'
 import postcssEasings from 'postcss-easings'
@@ -49,7 +49,7 @@ function createFontMatcher(fontNames: string[]) {
 }
 
 // https://vitejs.dev/config/
-export default defineConfig(({mode}) => {
+export default defineConfig(({ mode }) => {
 	// Load env file based on `mode` in the current working directory.
 	// Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
 	// https://vitejs.dev/config/#environment-variables
@@ -97,7 +97,7 @@ export default defineConfig(({mode}) => {
 			VitePluginInjectPreload({
 				files: [{
 					match: createFontMatcher(['Quicksand', 'OpenSans', 'OpenSans-Italic']),
-					attributes: {crossorigin: 'anonymous'},
+					attributes: { crossorigin: 'anonymous' },
 				}],
 				injectTo: 'custom',
 			}),
@@ -107,9 +107,9 @@ export default defineConfig(({mode}) => {
 				strategies: 'injectManifest',
 				injectRegister: false,
 				manifest: {
-					name: 'Vikunja',
-					short_name: 'Vikunja',
-					theme_color: '#1973ff',
+					name: 'PorePriority',
+					short_name: 'PorePriority',
+					theme_color: '#1f2937',
 					icons: [
 						{
 							src: './images/icons/android-chrome-192x192.png',
@@ -127,6 +127,11 @@ export default defineConfig(({mode}) => {
 							type: 'image/png',
 							purpose: 'maskable',
 						},
+						{
+							src: './images/icons/mstile-150x150.png',
+							sizes: '150x150',
+							type: 'image/png'
+						}
 					],
 					start_url: '.',
 					display: 'standalone',

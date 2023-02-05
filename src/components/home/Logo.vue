@@ -2,8 +2,8 @@
 import { computed } from 'vue'
 import { useNow } from '@vueuse/core'
 
-import LogoFull from '@/assets/logo-full.svg?component'
-import LogoFullPride from '@/assets/logo-full-pride.svg?component'
+import LogoFull from '../../assets/PorePriorityFull.svg?component'
+import LogoFullPride from '../../assets/PorePriorityFullPride.svg?component'
 
 const now = useNow()
 const Logo = computed(() => now.value.getMonth() === 5 ? LogoFullPride : LogoFull)

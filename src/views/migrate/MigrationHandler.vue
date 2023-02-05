@@ -79,7 +79,7 @@ export default {
 import {computed, ref, shallowReactive} from 'vue'
 import {useI18n} from 'vue-i18n'
 
-import Logo from '@/assets/logo.svg?component'
+import Logo from '@/assets/PorePriority.svg?component'
 import Message from '@/components/misc/message.vue'
 
 import AbstractMigrationService, { type MigrationConfig } from '@/services/migrator/abstractMigration'
