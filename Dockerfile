@@ -13,31 +13,32 @@ ENV PNPM_CACHE_FOLDER .cache/pnpm/
 
 COPY package.json ./
 COPY pnpm-lock.yaml ./
-
-RUN if [ "$USE_RELEASE" != true ]; then \
-      # https://pnpm.io/installation#using-corepack
-      corepack enable && \
-      pnpm install; \
-    fi
-
 COPY . ./
 
-RUN if [ "$USE_RELEASE" != true ]; then \
-      apk add --no-cache --virtual .build-deps git jq && \
-      git describe --tags --always --abbrev=10 | sed 's/-/+/; s/^v//; s/-g/-/' | \
-      xargs -0 -I{} jq -Mcnr --arg version {} '{VERSION:$version}' | \
-      tee src/version.json && \
-      apk del .build-deps; \
-    fi
+RUN if [ "$USE_RELEASE" != "true" ]; then \
+  # https://pnpm.io/installation#using-corepack
+  corepack enable && \
+  corepack prepare pnpm@latest --activate && \
+  pnpm install && \
+  pnpm build; \
+  fi
 
-RUN if [ "$USE_RELEASE" = true ]; then \
-      wget "https://dl.vikunja.io/frontend/vikunja-frontend-${RELEASE_VERSION}.zip" -O frontend-release.zip && \
-      unzip frontend-release.zip -d dist/; \
-    else \
-      # we don't use corepack prepare here by intend since
-      # we have renovate to keep our dependencies up to date
-      # Build the frontend
-      pnpm run build; \
+RUN if [ "$USE_RELEASE" != "true" ]; then \
+  apk add --no-cache --virtual .build-deps git jq && \
+  git describe --tags --always --abbrev=10 | sed 's/-/+/; s/^v//; s/-g/-/' | \
+  xargs -0 -I{} jq -Mcnr --arg version {} '{VERSION:$version}' | \
+  tee src/version.json && \
+  apk del .build-deps; \
+  fi
+
+RUN if [ "$USE_RELEASE" = "true" ]; then \
+  wget "https://dl.vikunja.io/frontend/vikunja-frontend-${RELEASE_VERSION}.zip" -O frontend-release.zip && \
+  unzip frontend-release.zip -d dist/; \
+  else \
+  # we don't use corepack prepare here by intend since
+  # we have renovate to keep our dependencies up to date
+  # Build the frontend
+  pnpm run build; \
   fi
 
 #  ┌┐┐┌─┐o┌┐┐┐ │
@@ -63,8 +64,8 @@ COPY docker/templates/. /etc/nginx/templates/
 COPY --from=builder /build/dist ./
 # manage permissions
 RUN chmod 0755 /docker-entrypoint.d/*.sh /etc/nginx/templates && \
-    chmod -R 0644 /etc/nginx/nginx.conf && \
-    chown -R nginx:nginx ./ /etc/nginx/conf.d /etc/nginx/templates && \
-    rm -f /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
+  chmod -R 0644 /etc/nginx/nginx.conf && \
+  chown -R nginx:nginx ./ /etc/nginx/conf.d /etc/nginx/templates && \
+  rm -f /docker-entrypoint.d/10-listen-on-ipv6-by-default.sh
 # unprivileged user
 USER nginx

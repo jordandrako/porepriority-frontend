@@ -106,10 +106,12 @@ export default defineConfig(({ mode }) => {
 				filename: 'sw.ts',
 				strategies: 'injectManifest',
 				injectRegister: false,
+				base: '/',
 				manifest: {
 					name: 'PorePriority',
 					short_name: 'PorePriority',
-					theme_color: '#1f2937',
+					theme_color: '#2B7BFD',
+					description: 'Powerful task management app powered by Vikunja.',
 					icons: [
 						{
 							src: './images/icons/android-chrome-192x192.png',
@@ -131,35 +133,65 @@ export default defineConfig(({ mode }) => {
 							src: './images/icons/mstile-150x150.png',
 							sizes: '150x150',
 							type: 'image/png'
+						},
+						{
+							src: './images/icons/apple-touch-icon.png',
+							sizes: '192x192',
+							type: 'image/png'
 						}
 					],
-					start_url: '.',
+					start_url: '/',
 					display: 'standalone',
-					background_color: '#000000',
+					background_color: '#1f2937',
 					shortcuts: [
 						{
 							name: 'Overview',
 							url: '/',
+							icons: [{
+								src: './images/icons/icon-96x96.png',
+								type: 'image/png',
+								purpose: 'any'
+							}]
 						},
 						{
 							name: 'Namespaces And Lists Overview',
 							short_name: 'Namespaces & Lists',
 							url: '/namespaces',
+							icons: [{
+								src: './images/icons/icon-96x96.png',
+								type: 'image/png',
+								purpose: 'any'
+							}]
 						},
 						{
 							name: 'Tasks Next Week',
 							short_name: 'Next Week',
 							url: '/tasks/by/week',
+							icons: [{
+								src: './images/icons/icon-96x96.png',
+								type: 'image/png',
+								purpose: 'any'
+							}]
 						},
 						{
 							name: 'Tasks Next Month',
 							short_name: 'Next Month',
 							url: '/tasks/by/month',
+							icons: [{
+								src: './images/icons/icon-96x96.png',
+								type: 'image/png',
+								purpose: 'any'
+							}]
 						},
 						{
 							name: 'Teams Overview',
 							short_name: 'Teams',
 							url: '/teams',
+							icons: [{
+								src: './images/icons/icon-96x96.png',
+								type: 'image/png',
+								purpose: 'any'
+							}]
 						},
 					],
 				},
