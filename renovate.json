@@ -21,6 +21,13 @@
       ]
     },
     {
+      "groupName": "histoire",
+      "matchPackagePrefixes": [
+        "@histoire/",
+        "histoire"
+      ]
+    },
+    {
       "matchDepTypes": ["devDependencies"],
       "automerge": true,
       "automergeStrategy": "squash",
