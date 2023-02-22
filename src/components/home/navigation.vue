@@ -122,6 +122,7 @@
 									<span class="list-menu-title">{{ getListTitle(l) }}</span>
 								</BaseButton>
 								<BaseButton
+									v-if="l.id > 0"
 									class="favorite"
 									:class="{'is-favorite': l.isFavorite}"
 									@click="listStore.toggleListFavorite(l)"
@@ -411,11 +412,15 @@ $vikunja-nav-selected-width: 0.4rem;
 				opacity: 0;
 				transition: opacity $transition;
 				margin-right: .25rem;
-				cursor: grab;
 			}
+
 			&:hover .handle {
 				opacity: 1;
 			}
+		}
+		
+		&:not(.dragging-disabled) .handle {
+			cursor: grab;
 		}
 	}
 }
